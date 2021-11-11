@@ -1,0 +1,68 @@
+
+.container {
+    margin: 0 1rem;
+}
+
+.title {
+    text-align: center;
+    font-size: 3rem;
+}
+
+.title span {
+    color: #ff9900
+}
+
+.item {
+    padding: 1rem;
+    border: 1px solid #2c2c2c;
+    border-radius: 1rem;
+    margin-top: 1rem;
+}
+
+
+.textInputContainer div {
+    display: flex;
+    flex-direction: row;
+}
+
+.textInputContainer div input {
+    flex: 1;
+    background-color: #000000;
+    font-size: 1rem;
+    color: #efefef;
+    padding: 0 1rem 0 1rem;
+    border-radius: 1rem;
+    border: 1px solid #2c2c2c;
+}
+
+.textInputContainer div input:focus {
+    outline: none;
+}
+
+.textInputContainer div button {
+    background-color: #000;
+    margin-left: 10px;
+    font-size: 1rem;
+    border-radius: 1rem;
+    border: 1px solid #2c2c2c;
+    padding: 1rem;
+    font-weight: bold;
+}
+
+.enabledButton {
+    color: #1384ff;
+}
+
+.disabledButton {
+    color: #00deff;
+}
+
+.textInputContainer div button:hover {
+    cursor: pointer;
+}
+
+.backToMain {
+    text-align: center;
+    font-weight: bold;
+    color: #1384ff;
+}

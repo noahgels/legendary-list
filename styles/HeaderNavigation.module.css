@@ -1,0 +1,35 @@
+
+.title {
+    text-align: center;
+    font-size: 3rem;
+}
+
+.title span {
+    color: #ff9900
+}
+
+.container {
+    margin: 0 1rem;
+}
+
+.navigation {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    padding: 10px 0;
+    border: solid #333;
+    border-width: 1px 0;
+}
+
+.navigation li {
+    list-style-type: none;
+    padding: 1rem;
+    margin: 0.5rem;
+    border: 1px #2c2c2c solid;
+    border-radius: 0.5rem;
+}
+
+.navigation li:active {
+    text-decoration: underline;
+}
