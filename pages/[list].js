@@ -15,7 +15,6 @@ export default function List(props) {
 
   const [value, setValue] = useState('');
   const [items, setItems] = useState([]);
-  items.reverse();
 
   const socket = useSocket();
 
@@ -74,7 +73,7 @@ export default function List(props) {
             </button>
           </div>
         </div>
-        {items ? (items).map((item, index) =>
+        {items ? [...items].reverse().map((item, index) =>
           <div key={item.name + index} className={styles.item}>
             {item.name}
           </div>
