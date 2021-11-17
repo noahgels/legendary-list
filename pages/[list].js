@@ -5,8 +5,7 @@ import Link from 'next/link';
 import useSWR from 'swr';
 import Head from "next/head";
 import routes from "../assets/routes.json";
-
-const fetcher = (url) => fetch(url).then((res) => res.json());
+import useSocket from "../hooks/useSocket";
 
 export default function List(props) {
 
@@ -15,14 +14,31 @@ export default function List(props) {
   const listName = routes[listRoute];
 
   const [value, setValue] = useState('');
-  const {data, error} = useSWR( `/api/item?list=${listRoute || ''}`, fetcher);
+  const [items, setItems] = useState([]);
 
-  // redirect user if list not exists
+  const socket = useSocket();
+
   useEffect(() => {
+
+    console.log('effect');
+
+    // redirect user if list not exists
     if (!listName && listRoute) {
       router.push('/');
     }
-  }, [listName, listRoute, router]);
+
+    if (socket) {
+      socket.emit('getItems', {
+        list: listRoute,
+      });
+
+      socket.on('setItems', setItems);
+
+      socket.on('a user connected', () => {
+        console.log('a user connected');
+      });
+    }
+  }, [socket]);
 
   return (
     <div className={styles.container}>
@@ -43,19 +59,12 @@ export default function List(props) {
             />
             <button
               onClick={value ? () => {
-                //setItems([...items, value]);
-                fetch('/api/item', {
-                  method: 'POST',
-                  headers: {
-                    'Content-Type': 'application/json'
-                  },
-                  body: JSON.stringify({
-                    name: value,
+                if (socket) {
+                  socket.emit('addItem', {
                     list: listRoute,
-                  }),
-                }).then(() => {
-                  window.location.reload();
-                })
+                    name: value,
+                  })
+                }
                 setValue('');
               } : null}
               className={value ? styles.enabledButton : styles.disabledButton}
@@ -64,7 +73,7 @@ export default function List(props) {
             </button>
           </div>
         </div>
-        {data ? data.map((item, index) =>
+        {items ? (items.reverse()).map((item, index) =>
           <div key={item.name + index} className={styles.item}>
             {item.name}
           </div>

@@ -2,14 +2,14 @@ import mariadb from 'mariadb';
 import {databaseConfig} from "../../config/config";
 
 // create mariadb connection
-const pool = mariadb.createPool(databaseConfig);
-let conn = null;
+//const pool = mariadb.createPool(databaseConfig);
+//let conn = null;
 
 const localGuysHere = [{name: 'Tom Teichert', list: 'personen'}];
 
 export default async function handler(req, res) {
 
-  if (!conn) {
+  /*if (!conn) {
     try {
       conn = await pool.getConnection();
     } catch (e) {
@@ -17,7 +17,7 @@ export default async function handler(req, res) {
       console.log(e)
       return;
     }
-  }
+  }*/
 
   switch (req.method) {
     case 'POST':
@@ -45,9 +45,9 @@ async function addItem(req, res) {
   }
 
   try {
-    await conn.query('INSERT INTO legends (name, list) VALUE (?,?)',
-      [name, list]);
-    //localGuysHere.push({name, list});
+    //await conn.query('INSERT INTO legends (name, list) VALUE (?,?)',
+    //  [name, list]);
+    localGuysHere.push({name, list});
     res.end();
   } catch (e) {
     console.log(e);
@@ -65,8 +65,8 @@ async function deleteItem(req, res) {
   }
 
   try {
-    conn.query(`UPDATE legends SET list = 'forgotton_legends' WHERE name = ? AND list = ?`,
-      {name, list})
+    //conn.query(`UPDATE legends SET list = 'forgotton_legends' WHERE name = ? AND list = ?`,
+    //  {name, list})
     res.end('Legends never die!');
   } catch (e) {
     console.log(e);
@@ -84,8 +84,8 @@ async function getItems(req, res) {
   }
 
   try {
-    res.json(await conn.query('SELECT * from legends WHERE list = ?', list));
-    //res.json(localGuysHere);
+    //res.json(await conn.query('SELECT * from legends WHERE list = ?', list));
+    res.json(localGuysHere);
   } catch (e) {
     console.log(e);
     res.status(500).end();
